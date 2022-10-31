@@ -20,7 +20,9 @@ const [toDo, setToDo] = useState("");
 ```
 
 * map() 메서드를 이용하여 각각의 배열요소를 순회 하면서 li를 추가될 수 있도록 한다.
+
 ```js
+
 <ul>
     //list 추가
     //currentItem은 각각의 요소를 가진다.
@@ -31,4 +33,5 @@ const [toDo, setToDo] = useState("");
       <li key={index}>{currentItem}</li>
     ))}
 </ul>
+
 ```
