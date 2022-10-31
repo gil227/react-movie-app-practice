@@ -19,14 +19,14 @@ const [toDo, setToDo] = useState("");
   }
 ```
 
-* **map() 메서드를 이용하여 각각의 배열요소를 순회 하면서 li를 추가될 수 있도록 한다.**
- 
-  <br>
+<br>
 
-  * list 추가
-  * currentItem은 각각의 요소를 가진다.
-  * index는 각 요소의 index를 가진다.
-  * key값은 필수이다.(map으로 받을수 있는 어떤 값도 가능 value || index || array)
+* map() 메서드를 이용하여 각각의 배열요소를 순회 하면서 li를 추가될 수 있도록 한다.
+  1. list 추가
+  2. currentItem은 각각의 요소를 가진다.
+  3. index는 각 요소의 index를 가진다.
+  4. key값은 필수이다.(map으로 받을수 있는 어떤 값도 가능 value || index || array)
+  
 ```js
 <ul>
     {list.map((currentItem,index)=>(
