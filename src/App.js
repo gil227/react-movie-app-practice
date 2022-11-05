@@ -1,33 +1,24 @@
-import {useState} from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [toDo, setToDo] = useState("");
-  const [list,addList] = useState([]);
-  const onChangeEvent = (e) => {
-    //event.target = 이벤트 대상 오브젝트(input)
-    setToDo(e.target.value);
-  };
-  const onSubmit = (e) =>{
-    e.preventDefault();
-    if(toDo === "") return;
-    setToDo("");
-    addList((currentArray)=> [toDo, ...currentArray]);
-  }
+  const [loading, setLoading] = useState(true);
+  const [coins, setCoins] = useState([]);
+  useEffect(() => {
+    fetch("https://api.coinpaprika.com/v1/tickers")
+      .then((response) => response.json())
+      .then((json) => {
+        setCoins(json);
+        console.log(coins);
+      });
+  }, []);
   return (
-    <div className="App">
-      <h1>To Do List {list.length}</h1>
-      <form onSubmit={onSubmit}>
-        <input type="text" value={toDo} onChange={onChangeEvent}/>
-        <button>Add</button>
-      </form>
-
-      <ul>
-        {list.map((currentItem,value)=>(
-          <li key={value}>{currentItem}</li>
-        ))}
-      </ul>
+    <div>
+      <h2>
+        <img src="/img/coin.png" alt="" />
+      </h2>
+      <div></div>
     </div>
-  )
+  );
 }
 
 export default App;
