@@ -1,33 +1,44 @@
-import {useState} from "react";
+import { useEffect, useState } from "react";
+import styles from "./AppStyle.module.css";
 
 function App() {
-  const [toDo, setToDo] = useState("");
-  const [list,addList] = useState([]);
-  const onChangeEvent = (e) => {
-    //event.target = 이벤트 대상 오브젝트(input)
-    setToDo(e.target.value);
-  };
-  const onSubmit = (e) =>{
-    e.preventDefault();
-    if(toDo === "") return;
-    setToDo("");
-    addList((currentArray)=> [toDo, ...currentArray]);
-  }
-  return (
-    <div className="App">
-      <h1>To Do List {list.length}</h1>
-      <form onSubmit={onSubmit}>
-        <input type="text" value={toDo} onChange={onChangeEvent}/>
-        <button>Add</button>
-      </form>
-
-      <ul>
-        {list.map((currentItem,value)=>(
-          <li key={value}>{currentItem}</li>
+  const [coins, setCoins] = useState([]);
+  useEffect(() => {
+    fetch("https://api.coinpaprika.com/v1/tickers")
+      .then((response) => response.json())
+      .then((json) => {
+        setCoins(json);
+      });
+  }, []);
+  function CoinList({ coin }) {
+    return (
+      <ul className={styles.liContainer}>
+        {coin.map((arr) => (
+          <li>
+            <strong>
+              {arr.symbol}
+              <span>({arr.name})</span>
+            </strong>
+            <span className="price">
+              <em>$</em> {arr.quotes.USD.price}
+            </span>
+          </li>
         ))}
       </ul>
+    );
+  }
+  return (
+    <div className={styles.bodyWrap}>
+      <h2 className={styles.title}>
+        <img src="/img/coin.png" alt="" />
+      </h2>
+
+      <div className={styles.liWrap}>
+        <h3>Coins List ({coins.length})</h3>
+        <CoinList coin={coins} />
+      </div>
     </div>
-  )
+  );
 }
 
 export default App;

@@ -34,3 +34,62 @@ const [toDo, setToDo] = useState("");
     ))}
 </ul>
 ```
+
+<br>
+
+## **2022. 11. 05 COIN CHECK API 만들기**
+fetch와 후속 메서드 then을 활용하여 데이터를 요청후 json 형태로 변환해서 코인의 이름과 가격을 리스트업 하는 간단한 페이지 제작\
+
+> #useState #useEffect #fetch #then #props
+
+```jsx
+function App() {
+  const [coins, setCoins] = useState([]);
+  
+  //useEffect로 한번만 불러온다.
+  useEffect(() => {
+    fetch("https://api.coinpaprika.com/v1/tickers")
+      .then((response) => response.json())
+      .then((json) => {
+        setCoins(json);
+      });
+  }, []);
+  
+  //리스트에 스타일을 입히기 위해서 한번 더 컴퍼넌트화 시키고
+  //props로 전달 후 map을 이용해 모든 배열을 뿌려준다.
+  function CoinList({ coin }) {
+    return (
+      <ul className={styles.liContainer}>
+        {coin.map((arr) => (
+          <li>
+            <strong>
+              {arr.symbol}
+              <span>({arr.name})</span>
+            </strong>
+            <span className="price">
+              <em>$</em> {arr.quotes.USD.price}
+            </span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  return (
+    <div className={styles.bodyWrap}>
+      <h2 className={styles.title}>
+        <img src="/img/coin.png" alt="" />
+      </h2>
+
+      <div className={styles.liWrap}>
+        <h3>Coins List ({coins.length})</h3>
+        <CoinList coin={coins} />
+      </div>
+    </div>
+  );
+}
+```
+
+### 완성 화면
+
+<img src="public/img/coin-checker.jpg" width="100%"/>
+
