@@ -2,30 +2,16 @@ import { useEffect, useState } from "react";
 import styles from "./AppStyle.module.css";
 
 function App() {
-  const [coins, setCoins] = useState([]);
+  const [movie, setMovie] = useState(true);
   useEffect(() => {
-    fetch("https://api.coinpaprika.com/v1/tickers")
+    fetch(
+      "https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year"
+    )
       .then((response) => response.json())
-      .then((json) => {
-        setCoins(json);
-      });
+      .then((json) => {});
   }, []);
   function CoinList({ coin }) {
-    return (
-      <ul className={styles.liContainer}>
-        {coin.map((arr) => (
-          <li>
-            <strong>
-              {arr.symbol}
-              <span>({arr.name})</span>
-            </strong>
-            <span className="price">
-              <em>$</em> {arr.quotes.USD.price}
-            </span>
-          </li>
-        ))}
-      </ul>
-    );
+    return <div>{loading ? <h1>loading...</h1> : null}</div>;
   }
   return (
     <div className={styles.bodyWrap}>
