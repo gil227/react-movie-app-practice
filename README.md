@@ -93,3 +93,54 @@ function App() {
 
 <img src="public/img/coin-checker.jpg" width="100%"/>
 
+
+<br>
+
+## **2022. 11. 12 MOVIE APP API 만들기**
+1. async-await을 이용해 데이터를 받아와 리스트가 나오는 페이지를 만듦
+
+```js
+const getMovies = async () => {
+  const response = await fetch('https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year');
+  const json = await response.json();
+}
+
+//같은 표현
+const getMovies2 = async () => {
+  const response = await ((await fetch('https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year')).json());
+}
+```
+
+2. router 사용을 위해서 컴퍼넌트 파일을 만든다.
+>router는 여러페이지를 상황에 따라 한곳에서(App.js) 렌더해주는 것이라 이해 하면 된다.
+
+<br>
+
+```js
+function App() {
+  return (
+          <Router>
+            //switch는 하나의 Route를 렌더해준다.
+            <Switch>
+              //:id 로 /movie/뒤에 파라미터를 가져올 수 있다.
+              <Route path="/movie/:id">
+                <Detail />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </Router>
+  );
+}
+```
+
+<br>
+
+3. ract router에 내장돼 있는 link를 이용하면 페이지를 새로고침(리렌더) 하지않고 페이지 이동을 할 수 있다.
+
+```js
+<Link to={`/movie/${id}`}>View More</Link>
+```
+
+
